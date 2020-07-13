@@ -1,5 +1,3 @@
-using System.Reflection.Metadata.Ecma335;
-using System.Diagnostics;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
@@ -10,16 +8,18 @@ using System.Net.Http;
 
 namespace BikeDataProject.API.Controllers
 {
+
     public class WebRegistrationController : ControllerBase
     {
         private readonly BikeDataDbContext _dbContext;
         private readonly HttpClient _httpClient = new HttpClient();
-        private readonly IConfiguration _configuration;
+        private readonly String _clientId, _clientSecret;
 
         public WebRegistrationController(BikeDataDbContext dbContext, IConfiguration configuration)
         {
             this._dbContext = dbContext;
-            this._configuration = configuration;
+            this._clientId = configuration.GetValue<String>("StravaClientId");
+            this._clientSecret = configuration.GetValue<String>("StravaClientSecret");
         }
 
         [HttpPost("/register/strava")]
@@ -29,8 +29,8 @@ namespace BikeDataProject.API.Controllers
             {
                 var data = new Dictionary<string, string>
                 {
-                    {"client_id", this._configuration.GetValue<String>("ClientId")},
-                    {"client_secret", this._configuration.GetValue<String>("ClientSecret")},
+                    {"client_id", this._clientId},
+                    {"client_secret", this._clientSecret},
                     {"code", code},
                     {"grant_type", "authorization_code"}
                 };
