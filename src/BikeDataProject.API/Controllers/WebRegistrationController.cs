@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
@@ -5,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using BikeDataProject.API.Domain;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http;
+using System.Text.Json;
+using BikeDataProject.API.Models;
 
 namespace BikeDataProject.API.Controllers
 {
@@ -37,7 +40,12 @@ namespace BikeDataProject.API.Controllers
                 var content = new FormUrlEncodedContent(data);
                 var response = await this._httpClient.PostAsync("https://www.strava.com/oauth/token", content);
                 var responseString = await response.Content.ReadAsStringAsync();
-                return this.Ok(responseString);
+
+                var registrationObj = JsonSerializer.Deserialize<StravaRegistration>(responseString);
+                if (!String.IsNullOrWhiteSpace(registrationObj.AccessToken) && !String.IsNullOrWhiteSpace(registrationObj.RefreshToken))
+                {
+                    return this.Ok(registrationObj);
+                }
             }
             return this.BadRequest();
         }
