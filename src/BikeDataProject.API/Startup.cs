@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BikeDataProject.API.Domain;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace BikeDataProject.API
 {
@@ -20,7 +21,6 @@ namespace BikeDataProject.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
             services.AddDbContext<BikeDataDbContext>(ctxt => new BikeDataDbContext(Configuration["DatabaseConnectionInfo"]));
         }
 

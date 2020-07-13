@@ -1,3 +1,5 @@
+using System.Reflection.Metadata.Ecma335;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
@@ -25,16 +27,17 @@ namespace BikeDataProject.API.Controllers
         {
             if (!String.IsNullOrWhiteSpace(code))
             {
-                var content = new FormUrlEncodedContent(new Dictionary<string, string>
+                var data = new Dictionary<string, string>
                 {
-                    {"client_id", this._configuration.GetValue<String>("ClientID")},
+                    {"client_id", this._configuration.GetValue<String>("ClientId")},
                     {"client_secret", this._configuration.GetValue<String>("ClientSecret")},
                     {"code", code},
                     {"grant_type", "authorization_code"}
-                });
+                };
+                var content = new FormUrlEncodedContent(data);
                 var response = await this._httpClient.PostAsync("https://www.strava.com/oauth/token", content);
                 var responseString = await response.Content.ReadAsStringAsync();
-                return this.Ok(String.Format("response is {0}", responseString));
+                return this.Ok(responseString);
             }
             return this.BadRequest();
         }
