@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace BikeDataProject.API.Models
 {
-    public class StravaRegistration
+    public class StravaRegistrationResponse
     {
         [JsonPropertyName("access_token")]
         public String AccessToken { get; set; }
