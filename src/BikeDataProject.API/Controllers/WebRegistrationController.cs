@@ -60,8 +60,7 @@ namespace BikeDataProject.API.Controllers
                     }
                     catch (System.Exception e)
                     {
-                        return this.Ok(e);
-                        return this.BadRequest();
+                        return this.BadRequest(e);
                     }
                 }
             }
