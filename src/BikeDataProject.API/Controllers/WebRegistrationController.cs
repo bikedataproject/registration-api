@@ -4,11 +4,10 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using BikeDataProject.API.Domain;
 using BikeDataProject.API.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-
+using BDPDatabase;
 
 namespace BikeDataProject.API.Controllers
 {
