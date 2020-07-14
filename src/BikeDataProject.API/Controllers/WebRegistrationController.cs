@@ -30,24 +30,15 @@ namespace BikeDataProject.API.Controllers
         {
             if (!String.IsNullOrWhiteSpace(code))
             {
-                /*var data = new StravaRegistrationRequest
+                var data = new StravaRegistrationRequest
                 {
                     ClientId = this._clientId,
                     ClientSecret = this._clientSecret,
                     Code = code
                 };
-                var content = new FormUrlEncodedContent(data.ToKeyValue());*/
-                var data = new Dictionary<string, string>
-                {
-                    {"client_id", this._clientId},
-                    {"client_secret", this._clientSecret},
-                    {"code", code},
-                    {"grant_type", "authorization_code"}
-                };
-                var content = new FormUrlEncodedContent(data);
+                var content = new FormUrlEncodedContent(data.ToKeyValue());
                 var response = await this._httpClient.PostAsync(this._stravaAuthEndpoint, content);
                 var responseString = await response.Content.ReadAsStringAsync();
-                return this.Ok(responseString);
                 var registrationObj = JsonSerializer.Deserialize<StravaRegistrationResponse>(responseString);
                 if (!String.IsNullOrWhiteSpace(registrationObj.AccessToken) && !String.IsNullOrWhiteSpace(registrationObj.RefreshToken) && registrationObj.ExpiresAt != 0)
                 {
