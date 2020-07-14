@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BikeDataProject.API.Migrations
 {
     [DbContext(typeof(BikeDataDbContext))]
-    [Migration("20200713095651_FillContributionsTable")]
-    partial class FillContributionsTable
+    [Migration("20200714120229_UpdateDatabase")]
+    partial class UpdateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,7 +56,7 @@ namespace BikeDataProject.API.Migrations
 
             modelBuilder.Entity("BikeDataProject.API.Domain.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -64,7 +64,16 @@ namespace BikeDataProject.API.Migrations
                     b.Property<string>("AccessToken")
                         .HasColumnType("text");
 
+                    b.Property<int>("ExpiresAt")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ExpiresIn")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Provider")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProviderUser")
                         .HasColumnType("text");
 
                     b.Property<string>("RefreshToken")
@@ -73,9 +82,38 @@ namespace BikeDataProject.API.Migrations
                     b.Property<DateTime>("TokenCreationDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("BikeDataProject.API.Domain.UserContribution", b =>
+                {
+                    b.Property<int>("UserContributionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("ContributionId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("UserContributionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserContributions");
+                });
+
+            modelBuilder.Entity("BikeDataProject.API.Domain.UserContribution", b =>
+                {
+                    b.HasOne("BikeDataProject.API.Domain.User", null)
+                        .WithMany("UserContributions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

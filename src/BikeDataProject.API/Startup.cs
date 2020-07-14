@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BikeDataProject.API.Domain;
 using Microsoft.Extensions.Hosting;
-using System;
+using Newtonsoft.Json;
 
 namespace BikeDataProject.API
 {

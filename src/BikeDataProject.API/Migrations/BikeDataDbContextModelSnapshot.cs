@@ -62,7 +62,16 @@ namespace BikeDataProject.API.Migrations
                     b.Property<string>("AccessToken")
                         .HasColumnType("text");
 
+                    b.Property<int>("ExpiresAt")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ExpiresIn")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Provider")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProviderUser")
                         .HasColumnType("text");
 
                     b.Property<string>("RefreshToken")
