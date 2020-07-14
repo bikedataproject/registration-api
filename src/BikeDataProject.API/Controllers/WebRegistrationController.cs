@@ -1,12 +1,12 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System;
-using Microsoft.AspNetCore.Mvc;
-using BikeDataProject.API.Domain;
-using Microsoft.Extensions.Configuration;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using BikeDataProject.API.Domain;
 using BikeDataProject.API.Models;
+using Microsoft.Extensions.Configuration;
+
 
 namespace BikeDataProject.API.Controllers
 {
@@ -40,9 +40,27 @@ namespace BikeDataProject.API.Controllers
                 var response = await this._httpClient.PostAsync(this._stravaAuthEndpoint, content);
                 var responseString = await response.Content.ReadAsStringAsync();
                 var registrationObj = JsonSerializer.Deserialize<StravaRegistrationResponse>(responseString);
-                if (!String.IsNullOrWhiteSpace(registrationObj.AccessToken) && !String.IsNullOrWhiteSpace(registrationObj.RefreshToken) && registrationObj.ExpiresAt != 0)
+                if (!String.IsNullOrWhiteSpace(registrationObj.AccessToken) && !String.IsNullOrWhiteSpace(registrationObj.RefreshToken))
                 {
-                    return this.Ok(registrationObj);
+                    try
+                    {
+                        var user = new User
+                        {
+                            Provider = "web/Strava",
+                            ProviderId = registrationObj.Athlete.Id,
+                            AccessToken = registrationObj.AccessToken,
+                            RefreshToken = registrationObj.RefreshToken,
+                            ExpiresIn = registrationObj.ExpiresIn,
+                            ExpiresAt = registrationObj.ExpiresAt
+                        };
+                        return this.Ok(user);
+                        this._dbContext.Users.Add(user);
+                        return this.Ok(registrationObj);
+                    }
+                    catch (System.Exception)
+                    {
+                        return this.BadRequest();
+                    }
                 }
             }
             return this.BadRequest();

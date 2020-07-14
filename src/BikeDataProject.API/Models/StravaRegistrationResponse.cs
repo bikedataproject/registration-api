@@ -11,5 +11,15 @@ namespace BikeDataProject.API.Models
         public String RefreshToken { get; set; }
         [JsonPropertyName("expires_at")]
         public Int32 ExpiresAt { get; set; }
+        [JsonPropertyName("expires_in")]
+        public Int32 ExpiresIn { get; set; }
+        [JsonPropertyName("athlete")]
+        public StravaAthleteDetails Athlete { get; set; }
+    }
+
+    public class StravaAthleteDetails
+    {
+        [JsonPropertyName("id")]
+        public Int32 Id { get; set; }
     }
 }
