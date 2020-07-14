@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
@@ -54,9 +55,14 @@ namespace BikeDataProject.API.Controllers
                             ExpiresIn = registrationObj.ExpiresIn,
                             ExpiresAt = registrationObj.ExpiresAt
                         };
-                        this._dbContext.Users.Add(user);
-                        this._dbContext.SaveChanges();
-                        return this.Ok(user);
+
+                        if (this._dbContext.Users.FirstOrDefault(u => u.ProviderUser == user.ProviderUser) == null)
+                        {
+                            this._dbContext.Users.Add(user);
+                            this._dbContext.SaveChanges();
+                            return this.Ok(user);
+                        }
+                        return this.BadRequest("{\"message\": \"User already exists\"}");
                     }
                     catch (System.Exception e)
                     {
