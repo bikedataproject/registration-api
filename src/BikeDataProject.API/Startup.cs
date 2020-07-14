@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BikeDataProject.API.Domain;
 using Microsoft.Extensions.Hosting;
-using System;
 
 namespace BikeDataProject.API
 {
