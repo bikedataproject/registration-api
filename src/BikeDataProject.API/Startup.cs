@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BikeDataProject.API.Domain;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 
 namespace BikeDataProject.API
 {
@@ -19,7 +20,7 @@ namespace BikeDataProject.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddDbContext<BikeDataDbContext>(ctxt => new BikeDataDbContext(Configuration["DatabaseConnectionInfo"]));
         }
 
