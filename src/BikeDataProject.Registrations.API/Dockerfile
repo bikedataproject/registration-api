@@ -18,4 +18,4 @@ ENV ASPNETCORE_URLS http://+:5000
 EXPOSE 5000
 
 # Execute the project build
-ENTRYPOINT ["dotnet", "BikeDataProject.API.dll"]
+ENTRYPOINT ["dotnet", "BikeDataProject.Registrations.API.dll"]
