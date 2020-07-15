@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BikeDataProject.API.Models
+namespace BikeDataProject.Registrations.API.Models
 {
     public class StravaRegistrationRequest
     {

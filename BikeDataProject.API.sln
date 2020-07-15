@@ -5,11 +5,11 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{157A8014-8DFC-4FB5-9D66-8C1480FBD94D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeDataProject.API", "src\BikeDataProject.API\BikeDataProject.API.csproj", "{AAB202EA-85C6-4B73-A3D5-09DA25C7ADB0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeDataProject.Registrations.API", "src\BikeDataProject.Registrations.API\BikeDataProject.Registrations.API.csproj", "{AAB202EA-85C6-4B73-A3D5-09DA25C7ADB0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{3BEF2717-CEED-4765-A53B-9E7BDAE64FF5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeDataProject.API.Test", "test\BikeDataProject.API.Test\BikeDataProject.API.Test.csproj", "{585187FB-19D6-4462-B7C2-AF3EB9DF913B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeDataProject.Registrations.API.Test", "test\BikeDataProject.Registrations.API.Test\BikeDataProject.Registrations.API.Test.csproj", "{585187FB-19D6-4462-B7C2-AF3EB9DF913B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

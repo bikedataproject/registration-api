@@ -6,7 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using BDPDatabase;
 
-namespace BikeDataProject.API
+namespace BikeDataProject.Registrations.API
 {
     public class Startup
     {

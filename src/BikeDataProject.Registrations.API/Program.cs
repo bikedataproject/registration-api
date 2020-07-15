@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace BikeDataProject.API
+namespace BikeDataProject.Registrations.API
 {
     public class Program
     {

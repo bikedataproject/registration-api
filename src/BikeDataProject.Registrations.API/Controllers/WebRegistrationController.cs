@@ -4,12 +4,12 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using BikeDataProject.API.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using BDPDatabase;
+using BikeDataProject.Registrations.API.Models;
 
-namespace BikeDataProject.API.Controllers
+namespace BikeDataProject.Registrations.API.Controllers
 {
 
     public class WebRegistrationController : ControllerBase
