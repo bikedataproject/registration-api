@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using BDPDatabase;
+using BikeDataProject.Registrations.API.Configuration;
 
 namespace BikeDataProject.Registrations.API
 {
@@ -20,8 +21,10 @@ namespace BikeDataProject.Registrations.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(StravaApiDetails.FromConfiguration(this.Configuration));
             services.AddControllers();
-            services.AddDbContext<BikeDataDbContext>(ctxt => new BikeDataDbContext(Configuration["DatabaseConnectionInfo"]));
+            services.AddDbContext<BikeDataDbContext>(ctxt => 
+                new BikeDataDbContext(Configuration[$"{Program.EnvVarPrefix}DB"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

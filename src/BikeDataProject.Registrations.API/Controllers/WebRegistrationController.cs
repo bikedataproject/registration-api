@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using BDPDatabase;
+using BikeDataProject.Registrations.API.Configuration;
 using BikeDataProject.Registrations.API.Models;
 
 namespace BikeDataProject.Registrations.API.Controllers
@@ -16,14 +17,12 @@ namespace BikeDataProject.Registrations.API.Controllers
     {
         private readonly BikeDataDbContext _dbContext;
         private readonly HttpClient _httpClient = new HttpClient();
-        private readonly String _clientId, _clientSecret, _stravaAuthEndpoint;
+        private readonly StravaApiDetails _apiDetails;
 
-        public WebRegistrationController(BikeDataDbContext dbContext, IConfiguration configuration)
+        public WebRegistrationController(BikeDataDbContext dbContext, StravaApiDetails apiDetails)
         {
             this._dbContext = dbContext;
-            this._clientId = configuration.GetValue<String>("StravaClientId");
-            this._clientSecret = configuration.GetValue<String>("StravaClientSecret");
-            this._stravaAuthEndpoint = configuration.GetValue<String>("StravaAuthEndpoint");
+            this._apiDetails = apiDetails;
         }
 
         [HttpPost("/register/strava")]
@@ -33,12 +32,12 @@ namespace BikeDataProject.Registrations.API.Controllers
             {
                 var data = new StravaRegistrationRequest
                 {
-                    ClientId = this._clientId,
-                    ClientSecret = this._clientSecret,
+                    ClientId = this._apiDetails.ClientId,
+                    ClientSecret = this._apiDetails.ClientSecret,
                     Code = code
                 };
                 var content = new FormUrlEncodedContent(data.ToKeyValue());
-                var response = await this._httpClient.PostAsync(this._stravaAuthEndpoint, content);
+                var response = await this._httpClient.PostAsync(this._apiDetails.AuthEndPoint, content);
                 var responseString = await response.Content.ReadAsStringAsync();
                 var registrationObj = JsonConvert.DeserializeObject<StravaRegistrationResponse>(responseString);
                 if (!String.IsNullOrWhiteSpace(registrationObj.AccessToken) && !String.IsNullOrWhiteSpace(registrationObj.RefreshToken))

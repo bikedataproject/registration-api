@@ -11,6 +11,8 @@ namespace BikeDataProject.Registrations.API
 {
     public class Program
     {
+        internal const string EnvVarPrefix = "BIKEDATA_";
+        
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
@@ -18,6 +20,10 @@ namespace BikeDataProject.Registrations.API
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    config.AddEnvironmentVariables(prefix: EnvVarPrefix);
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
