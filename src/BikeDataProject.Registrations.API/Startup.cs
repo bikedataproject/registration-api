@@ -34,8 +34,24 @@ namespace BikeDataProject.Registrations.API
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseHttpsRedirection();
+            
+            app.UseOpenApi(settings =>
+            {
+                settings.PostProcess = (document, req) =>
+                {
+                    document.Info.Version = "v1";
+                    document.Info.Title = "Bike Data Project - Registrations API";
+                    document.Info.Description = "An API allowing for the registration of linked apps and users.";
+                    document.Info.TermsOfService = string.Empty;
+                    document.Info.Contact = new NSwag.OpenApiContact()
+                    {
+                        Name = "Open Knowledge Belgium VZW/ASBL",
+                        Email = "dries@openknowledge.be",
+                        Url = "https://www.bikedataproject.info"
+                    };
+                };
+            });
+            app.UseSwaggerUi3();
 
             app.UseRouting();
 

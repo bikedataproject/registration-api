@@ -12,7 +12,6 @@ using BikeDataProject.Registrations.API.Models;
 
 namespace BikeDataProject.Registrations.API.Controllers
 {
-
     public class WebRegistrationController : ControllerBase
     {
         private readonly BikeDataDbContext _dbContext;
@@ -25,7 +24,7 @@ namespace BikeDataProject.Registrations.API.Controllers
             this._apiDetails = apiDetails;
         }
 
-        [HttpPost("/register/strava")]
+        [HttpPost("/strava")]
         public async Task<IActionResult> RegisterStrava(String code)
         {
             if (!String.IsNullOrWhiteSpace(code))
