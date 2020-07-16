@@ -28,5 +28,5 @@ jobs:
       run: dotnet publish -c release
       working-directory: ./src/BikeDataProject.Registrations.API/
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag geo-api:build
+      run: docker build . --file Dockerfile --tag registration-api:build
       working-directory: ./src/BikeDataProject.Registrations.API/
