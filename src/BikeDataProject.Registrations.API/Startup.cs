@@ -25,6 +25,8 @@ namespace BikeDataProject.Registrations.API
             services.AddControllers();
             services.AddDbContext<BikeDataDbContext>(ctxt => 
                 new BikeDataDbContext(Configuration[$"{Program.EnvVarPrefix}DB"]));
+            
+            services.AddSwaggerDocument();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="bikedataproject.database.models.package" Version="1.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5">
@@ -17,6 +21,5 @@
     <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
   </ItemGroup>
-
 
 </Project>

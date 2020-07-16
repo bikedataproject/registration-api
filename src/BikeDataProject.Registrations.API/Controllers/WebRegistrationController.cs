@@ -24,6 +24,10 @@ namespace BikeDataProject.Registrations.API.Controllers
             this._apiDetails = apiDetails;
         }
 
+        /// <summary>
+        /// Registers a new strava access token.
+        /// </summary>
+        /// <param name="code">The access token.</param>
         [HttpPost("/strava")]
         public async Task<IActionResult> RegisterStrava(String code)
         {
