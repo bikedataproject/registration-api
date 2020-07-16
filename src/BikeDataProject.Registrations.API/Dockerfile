@@ -18,4 +18,5 @@ ENV ASPNETCORE_URLS http://+:5000
 EXPOSE 5000
 
 # Execute the project build
+WORKDIR /var/app/
 ENTRYPOINT ["dotnet", "BikeDataProject.Registrations.API.dll"]
