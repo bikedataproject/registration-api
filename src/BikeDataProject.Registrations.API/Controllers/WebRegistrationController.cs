@@ -1,0 +1,123 @@
+using System;
+using System.Linq;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using BDPDatabase;
+using BikeDataProject.Registrations.API.Configuration;
+using BikeDataProject.Registrations.API.Models;
+using Serilog;
+using BikeDataProject.Registrations.API.Helpers;
+
+namespace BikeDataProject.Registrations.API.Controllers
+{
+    /// <summary>
+    /// Controller that handles all the registrations coming from the web- and mobile-application
+    /// </summary>
+    public class WebRegistrationController : ControllerBase
+    {
+        private readonly BikeDataDbContext _dbContext;
+        private readonly HttpClient _httpClient = new HttpClient();
+        private readonly StravaApiDetails _apiDetails;
+
+        /// <summary>
+        /// Initialise a new instance of the WebRegistrationController.
+        /// </summary>
+        /// <param name="dbContext">dbContext</param>
+        /// <param name="apiDetails">apiDetails</param>
+        public WebRegistrationController(BikeDataDbContext dbContext, StravaApiDetails apiDetails)
+        {
+            this._dbContext = dbContext;
+            this._apiDetails = apiDetails;
+        }
+
+        /// <summary>
+        /// Registers a new strava access token.
+        /// </summary>
+        /// <param name="code">The access token.</param>
+        [HttpPost("/strava")]
+        public async Task<IActionResult> RegisterStrava(String code)
+        {
+            if (String.IsNullOrWhiteSpace(code)) return this.BadRequest();
+            
+            var data = new StravaRegistrationRequest
+            {
+                ClientId = this._apiDetails.ClientId,
+                ClientSecret = this._apiDetails.ClientSecret,
+                Code = code
+            };
+            var content = new FormUrlEncodedContent(data.ToKeyValue());
+            var response = await this._httpClient.PostAsync(this._apiDetails.AuthEndPoint, content);
+            var responseString = await response.Content.ReadAsStringAsync();
+            var registrationObj = JsonConvert.DeserializeObject<StravaRegistrationResponse>(responseString);
+            if (String.IsNullOrWhiteSpace(registrationObj.AccessToken) ||
+                String.IsNullOrWhiteSpace(registrationObj.RefreshToken)) return this.BadRequest();
+            
+            try
+            {
+                var user = new User
+                {
+                    Provider = "web/Strava",
+                    ProviderUser = registrationObj.Athlete.Id.ToString(),
+                    AccessToken = registrationObj.AccessToken,
+                    RefreshToken = registrationObj.RefreshToken,
+                    ExpiresIn = registrationObj.ExpiresIn,
+                    ExpiresAt = registrationObj.ExpiresAt
+                };
+
+                if (this._dbContext.Users.FirstOrDefault(u => u.ProviderUser == user.ProviderUser) == null)
+                {
+                    this._dbContext.Users.Add(user);
+                    this._dbContext.SaveChanges();
+                    return this.Ok(user);
+                }
+                return this.BadRequest("{\"message\": \"User already exists\"}");
+            }
+            catch (System.Exception e)
+            {
+                Log.Error(e, "Unhandled exception getting tokens from Strava.");
+            }
+            
+            return this.BadRequest();
+        }
+        
+        /// <summary>
+        /// Method to retrieve a existing user or create a new one from the mobile app.
+        /// </summary>
+        /// <param name="userInfo"></param>
+        /// <returns>UserInfo of the registered user + Ok or Created</returns>
+        [HttpPost("/MobileApp")]
+        public IActionResult RegisterMobileApp([FromBody]UserInfo userInfo)
+        {
+            if(string.IsNullOrEmpty(userInfo.Imei))
+            {
+                return this.BadRequest();
+            }
+            var hashedIMEI = Hasher.GetHashString(userInfo.Imei);
+            var user = this._dbContext.ContainsProviderUser(hashedIMEI);
+            if( user != null)
+            {
+                userInfo.UserIdentifier = user.UserIdentifier;
+                return this.Ok(userInfo);
+            }
+            user = new User()
+            {
+                UserIdentifier = Guid.NewGuid(),
+                Provider = "mobileapp",
+                ProviderUser = hashedIMEI,
+                AccessToken = string.Empty,
+                RefreshToken = string.Empty,
+                TokenCreationDate = DateTime.MinValue,
+                ExpiresAt = -1,
+                ExpiresIn = -1
+            };
+            this._dbContext.AddUser(user);
+            this._dbContext.SaveChanges();
+            userInfo.UserIdentifier = user.UserIdentifier;
+            return this.Created(this.Request.Path, userInfo);
+        }
+    }
+}
