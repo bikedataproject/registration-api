@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace BikeDataProject.API.Models
+namespace BikeDataProject.Registrations.API.Models
 {
     public class StravaRegistrationResponse
     {

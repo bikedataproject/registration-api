@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace BikeDataProject.API.Test
+namespace BikeDataProject.Registrations.API.Test
 {
     public class UnitTest1
     {
