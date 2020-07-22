@@ -18,7 +18,7 @@ namespace BikeDataProject.Registrations.API.Configuration
         {
             var clientId = File.ReadAllText(configuration[$"{Program.EnvVarPrefix}STRAVA_CLIENT_ID"]);
             var clientSecret = File.ReadAllText(configuration[$"{Program.EnvVarPrefix}STRAVA_CLIENT_SECRET"]);
-            var authEndPoint = File.ReadAllText(configuration[$"{Program.EnvVarPrefix}STRAVA_AUTH_END_POINT"]);
+            var authEndPoint = configuration[$"{Program.EnvVarPrefix}STRAVA_AUTH_END_POINT"];
 
             if (string.IsNullOrWhiteSpace(clientId))
             {
