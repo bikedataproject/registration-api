@@ -54,6 +54,11 @@ namespace BikeDataProject.Registrations.API.Controllers
                 Code = code
             };
             var content = new FormUrlEncodedContent(data.ToKeyValue());
+            Log.Information(content.ToString());
+            Log.Information($"clientId: {this._apiDetails.ClientId}");
+            Log.Information($"clientSecret: {this._apiDetails.ClientSecret}");
+            Log.Information($"endpoint: {this._apiDetails.AuthEndPoint}");
+            Log.Information($"Code: {code}");
             var response = await this._httpClient.PostAsync(this._apiDetails.AuthEndPoint, content);
             var responseString = await response.Content.ReadAsStringAsync();
             var registrationObj = JsonConvert.DeserializeObject<StravaRegistrationResponse>(responseString);
