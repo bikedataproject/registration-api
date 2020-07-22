@@ -30,8 +30,6 @@ namespace BikeDataProject.Registrations.API
             services.AddControllers();
             services.AddDbContext<BikeDataDbContext>(options => options.UseNpgsql(File.ReadAllText(Configuration[$"{Program.EnvVarPrefix}DB"])));
             
-            Log.Information(File.ReadAllText(Configuration[$"{Program.EnvVarPrefix}DB"]));
-            
             services.AddSwaggerDocument();
         }
 
