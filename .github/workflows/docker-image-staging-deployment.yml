@@ -32,12 +32,6 @@ jobs:
       working-directory: ./src/BikeDataProject.Registrations.API/
     - name: Login to GitHub Packages with Docker
       run: echo ${{ secrets.DOCKER_HUB_TOKEN }} | docker login -u anywaysopen --password-stdin
-    - name: Tag the Docker image
-      run: docker tag bikedataproject/registration-api:staging
-      working-directory: ./src/BikeDataProject.Registrations.API/
-    - name: Build the Docker image for the package
-      run: docker build -t bikedataproject/registration-api:staging .
-      working-directory: ./src/BikeDataProject.Registrations.API/
     - name: Publish the image to GitHub packages.
       run: docker push bikedataproject/registration-api:staging
       working-directory: ./src/BikeDataProject.Registrations.API/
