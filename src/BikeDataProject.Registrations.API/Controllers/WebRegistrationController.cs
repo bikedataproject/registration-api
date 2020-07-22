@@ -60,7 +60,7 @@ namespace BikeDataProject.Registrations.API.Controllers
             if (String.IsNullOrWhiteSpace(registrationObj.AccessToken) ||
                 String.IsNullOrWhiteSpace(registrationObj.RefreshToken))
                 {
-                    Log.Error("Access token or refresh token is null");
+                    Log.Error($"Access token or refresh token is null,\nresponse: {responseString}");
                     return this.BadRequest();
                 }
             
