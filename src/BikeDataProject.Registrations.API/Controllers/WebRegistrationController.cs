@@ -43,7 +43,7 @@ namespace BikeDataProject.Registrations.API.Controllers
         {
             if (String.IsNullOrWhiteSpace(code))
             {
-                Log.Error("Code is null")
+                Log.Error("Code is null");
                 return this.BadRequest();
             }
             
