@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using BDPDatabase;
 using BikeDataProject.Registrations.API.Configuration;
 using Microsoft.AspNetCore.HttpOverrides;
+using System.IO;
 
 namespace BikeDataProject.Registrations.API
 {
@@ -26,7 +27,7 @@ namespace BikeDataProject.Registrations.API
             services.AddSingleton(StravaApiDetails.FromConfiguration(this.Configuration));
             services.AddControllers();
             services.AddDbContext<BikeDataDbContext>(ctxt => 
-                new BikeDataDbContext(Configuration[$"{Program.EnvVarPrefix}DB"]));
+                new BikeDataDbContext(File.ReadAllText(Configuration[$"{Program.EnvVarPrefix}DB"])));
             
             services.AddSwaggerDocument();
         }
