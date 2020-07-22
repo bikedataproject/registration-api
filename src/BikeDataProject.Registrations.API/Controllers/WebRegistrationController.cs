@@ -41,7 +41,11 @@ namespace BikeDataProject.Registrations.API.Controllers
         [HttpGet("/strava")]
         public async Task<IActionResult> RegisterStrava(String code)
         {
-            if (String.IsNullOrWhiteSpace(code)) return this.BadRequest();
+            if (String.IsNullOrWhiteSpace(code))
+            {
+                Log.Error("Code is null")
+                return this.BadRequest();
+            }
             
             var data = new StravaRegistrationRequest
             {
@@ -54,7 +58,11 @@ namespace BikeDataProject.Registrations.API.Controllers
             var responseString = await response.Content.ReadAsStringAsync();
             var registrationObj = JsonConvert.DeserializeObject<StravaRegistrationResponse>(responseString);
             if (String.IsNullOrWhiteSpace(registrationObj.AccessToken) ||
-                String.IsNullOrWhiteSpace(registrationObj.RefreshToken)) return this.BadRequest();
+                String.IsNullOrWhiteSpace(registrationObj.RefreshToken))
+                {
+                    Log.Error("Access token or refresh token is null");
+                    return this.BadRequest();
+                }
             
             try
             {
