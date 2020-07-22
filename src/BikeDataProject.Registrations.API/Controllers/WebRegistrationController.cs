@@ -38,7 +38,7 @@ namespace BikeDataProject.Registrations.API.Controllers
         /// Registers a new strava access token.
         /// </summary>
         /// <param name="code">The access token.</param>
-        [HttpPost("/strava")]
+        [HttpGet("/strava")]
         public async Task<IActionResult> RegisterStrava(String code)
         {
             if (String.IsNullOrWhiteSpace(code)) return this.BadRequest();
