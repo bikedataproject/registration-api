@@ -1,4 +1,6 @@
+using System;
 using Microsoft.Extensions.Configuration;
+using Serilog;
 
 namespace BikeDataProject.Registrations.API.Configuration
 {
@@ -16,6 +18,25 @@ namespace BikeDataProject.Registrations.API.Configuration
             var clientId = configuration[$"{Program.EnvVarPrefix}STRAVA_CLIENT_ID"];
             var clientSecret = configuration[$"{Program.EnvVarPrefix}STRAVA_CLIENT_SECRET"];
             var authEndPoint = configuration[$"{Program.EnvVarPrefix}STRAVA_AUTH_END_POINT"];
+
+            if (string.IsNullOrWhiteSpace(clientId))
+            {
+                Log.Fatal("clientId is not set");
+                throw new Exception("Environment variable not set");
+            }
+
+            if (string.IsNullOrWhiteSpace(clientSecret))
+            {
+                Log.Fatal("clientSecret is not set");
+                throw new Exception("Environment variable not set");
+            }
+
+            if (string.IsNullOrWhiteSpace(authEndPoint))
+            {
+                Log.Fatal("auth endpoint is not set");
+                throw new Exception("Environment variable not set");
+            }
+
             return new StravaApiDetails(clientId, clientSecret, authEndPoint);
         }
         
