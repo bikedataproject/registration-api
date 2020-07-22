@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 
@@ -15,9 +16,9 @@ namespace BikeDataProject.Registrations.API.Configuration
 
         public static StravaApiDetails FromConfiguration(IConfiguration configuration)
         {
-            var clientId = configuration[$"{Program.EnvVarPrefix}STRAVA_CLIENT_ID"];
-            var clientSecret = configuration[$"{Program.EnvVarPrefix}STRAVA_CLIENT_SECRET"];
-            var authEndPoint = configuration[$"{Program.EnvVarPrefix}STRAVA_AUTH_END_POINT"];
+            var clientId = File.ReadAllText(configuration[$"{Program.EnvVarPrefix}STRAVA_CLIENT_ID"]);
+            var clientSecret = File.ReadAllText(configuration[$"{Program.EnvVarPrefix}STRAVA_CLIENT_SECRET"]);
+            var authEndPoint = File.ReadAllText(configuration[$"{Program.EnvVarPrefix}STRAVA_AUTH_END_POINT"]);
 
             if (string.IsNullOrWhiteSpace(clientId))
             {
