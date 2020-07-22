@@ -9,6 +9,7 @@ using BDPDatabase;
 using BikeDataProject.Registrations.API.Configuration;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.IO;
+using Serilog;
 
 namespace BikeDataProject.Registrations.API
 {
@@ -28,6 +29,8 @@ namespace BikeDataProject.Registrations.API
             services.AddControllers();
             services.AddDbContext<BikeDataDbContext>(ctxt => 
                 new BikeDataDbContext(File.ReadAllText(Configuration[$"{Program.EnvVarPrefix}DB"])));
+            
+            Log.Information(File.ReadAllText(Configuration[$"{Program.EnvVarPrefix}DB"]));
             
             services.AddSwaggerDocument();
         }
