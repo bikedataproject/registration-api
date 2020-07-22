@@ -9,9 +9,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/BikeDataProject.API/bin/Debug/netcoreapp3.1/BikeDataProject.API.dll",
+            "program": "${workspaceFolder}/src/BikeDataProject.Registrations.API/bin/Debug/netcoreapp3.1/BikeDataProject.Registrations.API.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/BikeDataProject.API",
+            "cwd": "${workspaceFolder}/src/BikeDataProject.Registrations.API",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",

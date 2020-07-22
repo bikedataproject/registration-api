@@ -10,6 +10,7 @@ using BikeDataProject.Registrations.API.Configuration;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.IO;
 using Serilog;
+using Microsoft.EntityFrameworkCore;
 
 namespace BikeDataProject.Registrations.API
 {
@@ -27,8 +28,7 @@ namespace BikeDataProject.Registrations.API
         {
             services.AddSingleton(StravaApiDetails.FromConfiguration(this.Configuration));
             services.AddControllers();
-            services.AddDbContext<BikeDataDbContext>(ctxt => 
-                new BikeDataDbContext(File.ReadAllText(Configuration[$"{Program.EnvVarPrefix}DB"])));
+            services.AddDbContext<BikeDataDbContext>(options => options.UseNpgsql(File.ReadAllText(Configuration[$"{Program.EnvVarPrefix}DB"])));
             
             Log.Information(File.ReadAllText(Configuration[$"{Program.EnvVarPrefix}DB"]));
             

@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/BikeDataProject.API/BikeDataProject.API.csproj",
+                "${workspaceFolder}/src/BikeDataProject.Registrations.API/BikeDataProject.Registrations.API.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/src/BikeDataProject.API/BikeDataProject.API.csproj",
+                "${workspaceFolder}/src/BikeDataProject.Registrations.API/BikeDataProject.Registrations.API.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -32,7 +32,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/src/BikeDataProject.API/BikeDataProject.API.csproj",
+                "${workspaceFolder}/src/BikeDataProject.Registrations.API/BikeDataProject.Registrations.API.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

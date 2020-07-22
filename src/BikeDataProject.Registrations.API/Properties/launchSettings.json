@@ -19,7 +19,7 @@
         "BIKEDATA_STRAVA_CLIENT_ID": "client_id.txt",
         "BIKEDATA_STRAVA_CLIENT_SECRET": "client_secret.txt",
         "BIKEDATA_STRAVA_AUTH_END_POINT": "https://www.strava.com/oauth/token",
-        "BIKEDATA_DB": "Host=127.0.0.1;Port=5433;Database=bikedata;Username=postgres;Password=mixbeton"
+        "BIKEDATA_DB": "connection_string.txt"
       }
     }
   }
