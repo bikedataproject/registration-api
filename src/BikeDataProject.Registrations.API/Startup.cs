@@ -11,16 +11,31 @@ using Microsoft.AspNetCore.HttpOverrides;
 
 namespace BikeDataProject.Registrations.API
 {
+    /// <summary>
+    /// Startup class.
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// Startup method, executed at startup.
+        /// Sets the configuration.
+        /// </summary>
+        /// <param name="configuration">The configuration</param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// Getter for the configurations.
+        /// </summary>
+        /// <value></value>
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(StravaApiDetails.FromConfiguration(this.Configuration));
@@ -31,7 +46,11 @@ namespace BikeDataProject.Registrations.API
             services.AddSwaggerDocument();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -48,6 +67,7 @@ namespace BikeDataProject.Registrations.API
             
             app.UseForwardedHeaders(options);
             app.Use((context, next) => 
+            //This block is to forward the headers to the server.
             {
                 if (!context.Request.Headers.TryGetValue("X-Forwarded-PathBase", out var pathBases)) return next();
                 context.Request.PathBase = pathBases.First();
