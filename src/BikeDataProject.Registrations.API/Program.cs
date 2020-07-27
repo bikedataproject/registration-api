@@ -6,17 +6,24 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
 
 namespace BikeDataProject.Registrations.API
 {
+    /// <summary>
+    /// The Program class.
+    /// </summary>
     public class Program
     {
         internal const string EnvVarPrefix = "BIKEDATA_";
-        
+
+        /// <summary>
+        /// The main method.
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>        
         public static int Main(string[] args)
         {
             var logDir = "logs";
@@ -46,6 +53,11 @@ namespace BikeDataProject.Registrations.API
             }
         }
 
+        /// <summary>
+        /// Creates the host builder.
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .UseSerilog()
