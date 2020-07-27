@@ -4,8 +4,6 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using BDPDatabase;
 using BikeDataProject.Registrations.API.Configuration;
 using BikeDataProject.Registrations.API.Models;
@@ -24,7 +22,8 @@ namespace BikeDataProject.Registrations.API.Controllers
         private readonly StravaApiDetails _apiDetails;
 
         /// <summary>
-        /// Initialise a new instance of the WebRegistrationController.
+        /// Initialises a new instance of the WebRegistrationController.
+        /// Sets the Database context as dbContext and loads the details of the Strava API.
         /// </summary>
         /// <param name="dbContext">dbContext</param>
         /// <param name="apiDetails">apiDetails</param>
@@ -35,9 +34,10 @@ namespace BikeDataProject.Registrations.API.Controllers
         }
 
         /// <summary>
-        /// Registers a new strava access token.
+        /// Requests the user info from Strava given the token exchange code .
+        /// Creates a new strava user in the database and sets the Provideruser, the acces token and refresh token.
         /// </summary>
-        /// <param name="code">The access token.</param>
+        /// <param name="code">The token exchange code</param>
         [HttpGet("/strava")]
         public async Task<IActionResult> RegisterStrava(String code)
         {
@@ -93,9 +93,9 @@ namespace BikeDataProject.Registrations.API.Controllers
         }
         
         /// <summary>
-        /// Method to retrieve a existing user or create a new one from the mobile app.
+        /// Method to retrieve an existing user or create a new one from the mobile app.
         /// </summary>
-        /// <param name="userInfo"></param>
+        /// <param name="userInfo">The info of the user provided by the mobile app</param>
         /// <returns>UserInfo of the registered user + Ok or Created</returns>
         [HttpPost("/MobileApp")]
         public IActionResult RegisterMobileApp([FromBody]UserInfo userInfo)

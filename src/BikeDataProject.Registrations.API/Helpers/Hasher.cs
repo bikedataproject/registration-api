@@ -9,10 +9,12 @@ namespace BikeDataProject.Registrations.API.Helpers
     public class Hasher
     {
         /// <summary>
-        /// Method for creating a hash from an inputstring
+        /// Method for creating a hash from an inputstring.
+        /// This method uses the SHA256 algorithm to hash the inputstring.
+        /// It gives the output as a byte array.
         /// </summary>
-        /// <param name="inputString"></param>
-        /// <returns>hashed inputstring</returns>
+        /// <param name="inputString">The input string</param>
+        /// <returns>hashed inputstring as a byte array</returns>
         public static byte[] GetHash(string inputString)
         {
             using (HashAlgorithm algorithm = SHA256.Create())
@@ -20,10 +22,12 @@ namespace BikeDataProject.Registrations.API.Helpers
         }
         
         /// <summary>
-        /// Method for creating a hash from an inputstring
+        /// Method for creating a hash from an inputstring.
+        /// This method uses the SHA256 algorithm to hash the inputstring.
+        /// It gives the output as a string.
         /// </summary>
-        /// <param name="inputString"></param>
-        /// <returns>hashed inputstring</returns>
+        /// <param name="inputString">The input string</param>
+        /// <returns>hashed inputstring as a string</returns>
         public static string GetHashString(string inputString)
         {
             StringBuilder sb = new StringBuilder();
