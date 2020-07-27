@@ -24,7 +24,8 @@ namespace BikeDataProject.Registrations.API.Controllers
         private readonly StravaApiDetails _apiDetails;
 
         /// <summary>
-        /// Initialise a new instance of the WebRegistrationController.
+        /// Initialises a new instance of the WebRegistrationController.
+        /// Sets the Database context as dbContext and loads the details of the Strava API.
         /// </summary>
         /// <param name="dbContext">dbContext</param>
         /// <param name="apiDetails">apiDetails</param>
@@ -93,7 +94,7 @@ namespace BikeDataProject.Registrations.API.Controllers
         }
         
         /// <summary>
-        /// Method to retrieve a existing user or create a new one from the mobile app.
+        /// Method to retrieve an existing user or create a new one from the mobile app.
         /// </summary>
         /// <param name="userInfo"></param>
         /// <returns>UserInfo of the registered user + Ok or Created</returns>
