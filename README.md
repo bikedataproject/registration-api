@@ -88,7 +88,7 @@ dotnet run
 ```
 
 ## Usage
-This API is used to store gps tracks that comes from our [mobile application](https://github.com/bikedataproject/app) but also to delete data from users (those who linked their Strava account with our service, those who donated their data via .GPX/.FIT files or those who used our mobile application).
+This API is used to link users' Strava account to our service by storing the minimal information needed to permit an automatic fetch of their cycling activities.
 
 ## Roadmap
 
