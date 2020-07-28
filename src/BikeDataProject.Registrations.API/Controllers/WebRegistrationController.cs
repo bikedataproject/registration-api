@@ -80,7 +80,7 @@ namespace BikeDataProject.Registrations.API.Controllers
                 {
                     this._dbContext.Users.Add(user);
                     this._dbContext.SaveChanges();
-                    return this.Ok(user);
+                    return this.Redirect(this._apiDetails.RedirectionUri);
                 }
                 return this.BadRequest("{\"message\": \"User already exists\"}");
             }
