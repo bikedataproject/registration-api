@@ -16,11 +16,13 @@ namespace BikeDataProject.Registrations.API.Configuration
         /// <param name="clientId">The strava clientId of the user.</param>
         /// <param name="clientSecret">The strava clientSecret of the user.</param>
         /// <param name="authEndPoint">The authentication endpoint from Strava.</param>
-        public StravaApiDetails(string clientId, string clientSecret, string authEndPoint)
+        /// <param name="redirectionUri">The redirection URI.</param>
+        public StravaApiDetails(string clientId, string clientSecret, string authEndPoint, string redirectionUri)
         {
             this.ClientId = clientId;
             this.ClientSecret = clientSecret;
             this.AuthEndPoint = authEndPoint;
+            this.RedirectionUri = redirectionUri;
         }
 
         /// <summary>
@@ -33,6 +35,7 @@ namespace BikeDataProject.Registrations.API.Configuration
             var clientId = File.ReadAllText(configuration[$"{Program.EnvVarPrefix}STRAVA_CLIENT_ID"]);
             var clientSecret = File.ReadAllText(configuration[$"{Program.EnvVarPrefix}STRAVA_CLIENT_SECRET"]);
             var authEndPoint = configuration[$"{Program.EnvVarPrefix}STRAVA_AUTH_END_POINT"];
+            var redirectionUri = configuration[$"{Program.EnvVarPrefix}REDIRECTION_URI"];
 
             if (string.IsNullOrWhiteSpace(clientId))
             {
@@ -52,7 +55,13 @@ namespace BikeDataProject.Registrations.API.Configuration
                 throw new Exception("Environment variable not set");
             }
 
-            return new StravaApiDetails(clientId, clientSecret, authEndPoint);
+            if (string.IsNullOrWhiteSpace(redirectionUri))
+            {
+                Log.Fatal("redirection is not set");
+                throw new Exception("Environment variable not set");
+            }
+
+            return new StravaApiDetails(clientId, clientSecret, authEndPoint, redirectionUri);
         }
         
         /// <summary>
@@ -72,5 +81,11 @@ namespace BikeDataProject.Registrations.API.Configuration
         /// </summary>
         /// <value></value>
         public string AuthEndPoint { get; }
+
+        /// <summary>
+        /// The redirection URI at the end of the Strava registration.
+        /// </summary>
+        /// <value></value>
+        public string RedirectionUri {get;}
     }
 }
