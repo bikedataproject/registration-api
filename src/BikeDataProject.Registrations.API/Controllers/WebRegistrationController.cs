@@ -44,7 +44,7 @@ namespace BikeDataProject.Registrations.API.Controllers
             if (String.IsNullOrWhiteSpace(code))
             {
                 Log.Error("Code is null");
-                return this.BadRequest();
+                return this.Redirect($"{this._apiDetails.RedirectionUri}{Constants.StravaStatusFailed}");
             }
             
             var data = new StravaRegistrationRequest
@@ -61,7 +61,7 @@ namespace BikeDataProject.Registrations.API.Controllers
                 String.IsNullOrWhiteSpace(registrationObj.RefreshToken))
                 {
                     Log.Error($"Access token or refresh token is null, response: {responseString}");
-                    return this.BadRequest();
+                    return this.Redirect($"{this._apiDetails.RedirectionUri}{Constants.StravaStatusFailed}");
                 }
             
             try
@@ -91,14 +91,14 @@ namespace BikeDataProject.Registrations.API.Controllers
                 }
 
                 Log.Information("Everything is good, redirection");
-                return this.Redirect(this._apiDetails.RedirectionUri);
+                return this.Redirect($"{this._apiDetails.RedirectionUri}{Constants.StravaStatusSuccess}");
             }
             catch (System.Exception e)
             {
                 Log.Error(e, "Unhandled exception getting tokens from Strava.");
             }
-            
-            return this.BadRequest("{\"message:\": \"Unable to register the user\"}");
+
+            return this.Redirect($"{this._apiDetails.RedirectionUri}{Constants.StravaStatusFailed}");
         }
         
         /// <summary>
