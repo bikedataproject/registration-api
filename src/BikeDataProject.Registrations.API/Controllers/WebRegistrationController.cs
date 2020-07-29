@@ -69,27 +69,30 @@ namespace BikeDataProject.Registrations.API.Controllers
                 var user = new User
                 {
                     Provider = "web/Strava",
+                    UserIdentifier = Guid.NewGuid(),
                     ProviderUser = registrationObj.Athlete.Id.ToString(),
                     AccessToken = registrationObj.AccessToken,
                     RefreshToken = registrationObj.RefreshToken,
                     ExpiresIn = registrationObj.ExpiresIn,
-                    ExpiresAt = registrationObj.ExpiresAt
+                    ExpiresAt = registrationObj.ExpiresAt,
+                    TokenCreationDate = DateTime.UtcNow,
+                    IsHistoryFetched = false
                 };
 
                 if (this._dbContext.Users.FirstOrDefault(u => u.ProviderUser == user.ProviderUser) == null)
                 {
                     this._dbContext.Users.Add(user);
                     this._dbContext.SaveChanges();
-                    return this.Redirect(this._apiDetails.RedirectionUri);
                 }
-                return this.BadRequest("{\"message\": \"User already exists\"}");
+
+                return this.Redirect(this._apiDetails.RedirectionUri);
             }
             catch (System.Exception e)
             {
                 Log.Error(e, "Unhandled exception getting tokens from Strava.");
             }
             
-            return this.BadRequest();
+            return this.BadRequest("{\"message:\": \"Unable to register the user\"}");
         }
         
         /// <summary>
