@@ -81,10 +81,16 @@ namespace BikeDataProject.Registrations.API.Controllers
 
                 if (this._dbContext.Users.FirstOrDefault(u => u.ProviderUser == user.ProviderUser) == null)
                 {
+                    Log.Information($"New user is going to be added ProviderUser: {user.ProviderUser}");
                     this._dbContext.Users.Add(user);
                     this._dbContext.SaveChanges();
                 }
+                else
+                {
+                    Log.Information($"User already exists, ProviderUser: {user.ProviderUser}");
+                }
 
+                Log.Information("Everything is good, redirection");
                 return this.Redirect(this._apiDetails.RedirectionUri);
             }
             catch (System.Exception e)
