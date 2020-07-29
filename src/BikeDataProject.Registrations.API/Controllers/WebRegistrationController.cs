@@ -68,7 +68,7 @@ namespace BikeDataProject.Registrations.API.Controllers
             {
                 var user = new User
                 {
-                    Provider = "web/Strava",
+                    Provider = Constants.WebStravaUserAgent,
                     UserIdentifier = Guid.NewGuid(),
                     ProviderUser = registrationObj.Athlete.Id.ToString(),
                     AccessToken = registrationObj.AccessToken,
@@ -79,7 +79,7 @@ namespace BikeDataProject.Registrations.API.Controllers
                     IsHistoryFetched = false
                 };
 
-                if (this._dbContext.Users.FirstOrDefault(u => (u.ProviderUser == user.ProviderUser) || (u.Provider == "web/Strava")) == null)
+                if (this._dbContext.Users.FirstOrDefault(u => (u.ProviderUser == user.ProviderUser) || (u.Provider == Constants.WebStravaUserAgent)) == null)
                 {
                     Log.Information($"New user is going to be added ProviderUser: {user.ProviderUser}");
                     this._dbContext.Users.Add(user);
